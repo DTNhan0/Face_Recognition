@@ -56,7 +56,11 @@ Oke, sau khi đã hoàn thành các bước trên, chúng ta có thể sử dụ
 
 *Lưu ý: phải mở quyền truy cập cho camera trước khi thực hiện chức năng nhận diện khuôn mặt
 
-
+Tổng quan hóa quá trình hoạt động:
++ Ở đây mình sử dụng HQTCSDL MySQL, mục đích chính là dùng để lưu trữ thông tin người dùng cũng như đường dẫn hình ảnh. Việc gán nhãn dữ liệu đều được xử lý thông qua thuật toán (mn xem code hàm save_to_db_and_generate_code).
++ Vì đây chỉ là phần demo cho nên phần mềm sẽ rất là lỏd, sẽ không có phần validate nên mọi người phải tự nhập và kiểm tra thông tin.
++ Luồng hoạt động: mở phần mềm => nếu chưa có thông tin thì nhập, còn đã có model rồi thì chỉ cần dùng chức năng nhận diện khuôn mặt => thông tin lưu vào csdl => sau khi nhập xong thì bắt đầu tiến hành tạo dataset => code sẽ lấy thông tin vừa nhập để tìm kiếm trên database và tự động gán nhãn dữ liệu phân loại hình ảnh sau khi các hình ảnh được ghi lại xong => nếu muốn tạo lại dataset thì nhập thông tin mssv rồi bấm generate_dataset (quá trình hoạt động sẽ diễn ra tương tự như bước kia) => đã có dataset thì tiến hành train (trước khi train ta phải nhập mssv, sau đó thuật toán sẽ đi vào csdl bảng image để tìm kiếm toàn bộ url có chứa mssv ta mới vừa nhập => từ đường dẫn ta lấy được các hình ảnh để train => train xong thì tạo ra các model được gắn liền với thông tin mssv đem qua hàm face_recognition sử dụng => và bước cuối cùng là nhận diện khuôn mặt
++ Quá trình hoạt động của code khá dễ nên mọi có thể thay đổi thuật toán thoải mái, nhưng phải lưu ý đường dẫn vì mình fix cứng phần đường dẫn phải là ../input/Model/... và ../input/Dataset/...
 
 
 
